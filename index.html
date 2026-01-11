@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<title>Only You 💖</title>
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{
+    font-family:'Segoe UI',sans-serif;
+    scroll-behavior:smooth;
+}
+
+/* ===== CHUNG ===== */
+section{
+    width:100%;
+    height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    text-align:center;
+    position:relative;
+    overflow:hidden;
+}
+
+/* ===== WEB 1 ===== */
+#web1{
+    background:linear-gradient(-45deg,#ff9a9e,#fad0c4,#fbc2eb,#a18cd1);
+    background-size:400% 400%;
+    animation:bgFlow 14s ease infinite;
+    color:white;
+}
+@keyframes bgFlow{
+    0%{background-position:0% 50%}
+    50%{background-position:100% 50%}
+    100%{background-position:0% 50%}
+}
+
+.heart{
+    position:absolute;
+    bottom:-10vh;
+    opacity:.9;
+    animation:fly linear forwards;
+    filter:drop-shadow(0 0 8px rgba(255,120,180,.8));
+}
+@keyframes fly{
+    from{transform:translateY(0) scale(.6)}
+    to{transform:translateY(-120vh) scale(1.4);opacity:0}
+}
+
+#web1 h1{
+    font-size:52px;
+    text-shadow:0 0 35px rgba(255,160,210,.9);
+}
+#web1 p{margin:18px 0 28px;font-size:20px}
+
+button{
+    padding:15px 45px;
+    border:none;
+    border-radius:40px;
+    font-size:18px;
+    background:linear-gradient(45deg,#ff5fa2,#ffc371);
+    color:white;
+    cursor:pointer;
+    animation:btnPulse 2.6s infinite;
+}
+@keyframes btnPulse{
+    50%{transform:scale(1.07);box-shadow:0 0 45px rgba(255,150,220,.9)}
+}
+
+/* ===== WEB 2 ===== */
+#web2{
+    background:linear-gradient(-45deg,#ffe3f1,#fbc2eb,#d7c7ff,#ffd1ea);
+    background-size:400% 400%;
+    animation:bgMove 12s ease infinite;
+}
+@keyframes bgMove{
+    0%{background-position:0% 50%}
+    50%{background-position:100% 50%}
+    100%{background-position:0% 50%}
+}
+
+.big-heart{
+    font-size:120px;
+    color:#ff6fb1;
+    animation:beat 1.4s infinite;
+    text-shadow:0 0 50px rgba(255,120,180,.9);
+}
+@keyframes beat{50%{transform:scale(1.25)}}
+
+#text{
+    margin-top:25px;
+    font-size:21px;
+    line-height:2;
+    color:#ff8fcf;
+    text-shadow:0 0 12px rgba(255,150,200,.7);
+}
+
+@keyframes fadeIn{
+    from{
+        opacity:0;
+        transform:translateY(8px) scale(.96);
+        filter:blur(2px);
+    }
+    to{
+        opacity:1;
+        transform:none;
+        filter:none;
+    }
+}
+
+/* ===== VIDEO ===== */
+#ending{
+    background:linear-gradient(135deg,#000,#1a0010,#000);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+#ending video{
+    position:absolute;
+    width:80vw;
+    height:80vh;
+    object-fit:contain;
+    border-radius:24px;
+    box-shadow:0 0 60px rgba(255,120,180,.6);
+    opacity:0;
+    transition:opacity 1.2s;
+}
+
+/* Ẩn audio */
+audio{display:none}
+</style>
+</head>
+
+<body>
+
+<!-- WEB 1 -->
+<section id="web1">
+    <div>
+        <h1>Only You 💖</h1>
+        <p>Giữa thế giới này<br>anh chỉ chọn em</p>
+        <button id="btnStart">Đi tiếp ✨</button>
+    </div>
+</section>
+
+<!-- WEB 2 -->
+<section id="web2">
+    <div>
+        <div class="big-heart">❤</div>
+        <p id="text"></p>
+    </div>
+</section>
+
+<!-- VIDEO -->
+<section id="ending">
+    <video id="v1" src="video 1.mp4" muted></video>
+    <video id="v2" src="video 2.mp4" muted></video>
+</section>
+
+<!-- NHẠC XUYÊN SUỐT -->
+<audio id="bgm" loop>
+    <source src="amthanh.mp3.mp3" type="audio/mpeg">
+    Trình duyệt của bạn không hỗ trợ audio.
+</audio>
+
+<script>
+/* Lấy các phần tử */
+const bgm = document.getElementById("bgm");
+const web1 = document.getElementById("web1");
+const web2 = document.getElementById("web2");
+const ending = document.getElementById("ending");
+const v1 = document.getElementById("v1");
+const v2 = document.getElementById("v2");
+const text = document.getElementById("text");
+const btnStart = document.getElementById("btnStart");
+
+/* Nhạc nền: volume chuẩn */
+bgm.volume = 0.6;
+
+/* Tim bay */
+setInterval(()=>{
+    const h = document.createElement("div");
+    h.className="heart";
+    h.innerHTML="❤";
+    h.style.left = Math.random()*100+"vw";
+    h.style.fontSize = 14 + Math.random()*26 + "px";
+    h.style.color = ["#ffd1ea","#ff9ad5","#ffffff"][Math.floor(Math.random()*3)];
+    h.style.animationDuration = 8 + Math.random()*6 + "s";
+    web1.appendChild(h);
+    setTimeout(()=>h.remove(),15000);
+},160);
+
+/* Khi click nút “Đi tiếp” */
+btnStart.addEventListener("click", ()=>{
+    web2.scrollIntoView({behavior:"smooth"});
+    // Phát nhạc nền xuyên suốt
+    bgm.play().catch(err=>{
+        console.log("Nhạc chưa được phép phát tự động:", err);
+    });
+    setTimeout(typeText,1200);
+});
+
+/* Chữ gõ */
+const message = 
+"Anh không cần cả thế giới.\n\
+Chỉ cần em.\n\
+Vì với anh,\n\
+em là tất cả ❤️❤️";
+
+let i = 0;
+function typeText(){
+    if(i < message.length){
+        if(message[i]==="\n"){
+            text.innerHTML += "<br>";
+            i++;
+            setTimeout(typeText,350);
+            return;
+        }
+        const s = document.createElement("span");
+        s.textContent = message[i];
+        s.style.opacity = 0;
+        s.style.display = "inline-block";
+        s.style.animation = "fadeIn .7s forwards";
+        text.appendChild(s);
+        i++;
+        setTimeout(typeText,32);
+    }else{
+        setTimeout(playEnding,2000);
+    }
+}
+
+/* Video */
+function playEnding(){
+    ending.scrollIntoView({behavior:"smooth"});
+    // Giảm âm lượng nhạc nền khi video chạy
+    bgm.volume = 0.4;
+
+    v1.style.opacity = 1;
+    v1.play();
+
+    v1.onended = ()=>{
+        v1.style.opacity = 0;
+        setTimeout(()=>{
+            v2.style.opacity = 1;
+            v2.play();
+        },1000);
+    }
+}
+</script>
+
+</body>
+</html>
